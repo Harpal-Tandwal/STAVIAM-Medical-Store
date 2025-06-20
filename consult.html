@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Medicine Suggester | STAVIAM Health Care</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md mb-6">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-green-800">STAVIAM AI Advisor</div>
+      <a href="index.html" class="text-green-600 font-medium hover:underline">Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-8 mb-16">
+    <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">AI-Powered Medicine Suggester</h2>
+    
+    <form id="symptomForm" class="space-y-5">
+      <label class="block">
+        <span class="text-gray-700 font-semibold">Describe your symptoms:</span>
+        <textarea id="symptoms" required rows="5" class="mt-1 w-full border rounded-md px-4 py-2 focus:ring-2 focus:ring-green-600"></textarea>
+      </label>
+      <button type="submit"
+              class="bg-green-700 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition">
+        Suggest Medicine
+      </button>
+    </form>
+
+    <!-- Result -->
+    <div id="suggestionResult" class="mt-8 text-green-800 font-semibold"></div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const form = document.getElementById("symptomForm");
+    const resultBox = document.getElementById("suggestionResult");
+
+    const suggestions = [
+      { keywords: ["fever", "temperature", "body heat"], medicine: "Paracetamol 500mg (Stavflu)" },
+      { keywords: ["cough", "cold", "throat"], medicine: "Levocetirizine + Montelukast (Stavcold-LM)" },
+      { keywords: ["stomach", "acidity", "gas", "bloating"], medicine: "Pantoprazole (SH-40 Injection)" },
+      { keywords: ["weakness", "anemia", "low hemoglobin"], medicine: "Feronium XT / Ferrovian XT" },
+      { keywords: ["irregular periods", "pcos", "hormonal"], medicine: "Lunar DS (Myo-Inositol Support)" },
+      { keywords: ["liver", "jaundice", "hepatitis"], medicine: "Hepasync (Liver Tonic)" },
+      { keywords: ["dry skin", "fungal", "itch"], medicine: "Xeroclear FM-2 Cream" },
+    ];
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const input = document.getElementById("symptoms").value.toLowerCase();
+      let found = "We couldn't identify a suitable medicine. Please consult a doctor.";
+
+      for (let s of suggestions) {
+        if (s.keywords.some(keyword => input.includes(keyword))) {
+          found = `Suggested Medicine: <strong>${s.medicine}</strong>`;
+          break;
+        }
+      }
+
+      resultBox.innerHTML = found;
+    });
+  </script>
+
+</body>
+</html>
